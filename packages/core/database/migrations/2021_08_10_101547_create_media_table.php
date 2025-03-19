@@ -4,16 +4,15 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Lunar\Base\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
-        if (! Schema::hasTable('media')) {
+        if (!Schema::hasTable('media')) {
             Schema::create('media', function (Blueprint $table) {
                 $table->bigIncrements('id');
 
                 $table->morphs('model');
-                $table->uuid('uuid')->nullable(); // ->unique()
+                $table->uuid('uuid')->nullable()->unique();
                 $table->string('collection_name');
                 $table->string('name');
                 $table->string('file_name');
@@ -28,8 +27,6 @@ return new class extends Migration
                 $table->unsignedInteger('order_column')->nullable();
 
                 $table->nullableTimestamps();
-                $table->foreignUuid('tenant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-                $table->unique(['uuid', 'tenant_id']);
             });
         }
     }
