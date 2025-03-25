@@ -4,13 +4,12 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Lunar\Base\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
-        Schema::create($this->prefix.'currencies', function (Blueprint $table) {
+        Schema::create($this->prefix . 'currencies', function (Blueprint $table) {
             $table->id();
-            $table->string('code'); // ->unique();
+            $table->string('code')->unique();
             $table->string('name');
             $table->decimal('exchange_rate', 10, 4);
             $table->string('format');
@@ -20,13 +19,11 @@ return new class extends Migration
             $table->boolean('enabled')->default(false)->index();
             $table->boolean('default')->default(false)->index();
             $table->timestamps();
-            $table->foreignUuid('tenant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->unique(['code', 'tenant_id']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists($this->prefix.'currencies');
+        Schema::dropIfExists($this->prefix . 'currencies');
     }
 };
