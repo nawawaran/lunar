@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Lunar\Admin\Database\Factories\StaffFactory;
 use Spatie\Permission\Traits\HasRoles;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Staff extends Authenticatable implements FilamentUser, HasName
 {
@@ -83,7 +84,7 @@ class Staff extends Authenticatable implements FilamentUser, HasName
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('lunar.database.table_prefix').$this->getTable());
+        $this->setTable(config('lunar.database.table_prefix') . $this->getTable());
 
         if ($connection = config('lunar.database.connection')) {
             $this->setConnection($connection);
@@ -128,7 +129,7 @@ class Staff extends Authenticatable implements FilamentUser, HasName
      */
     public function getFullNameAttribute(): string
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function canAccessPanel(Panel $panel): bool
@@ -139,5 +140,15 @@ class Staff extends Authenticatable implements FilamentUser, HasName
     public function getFilamentName(): string
     {
         return $this->fullName;
+    }
+
+    public function pins(): MorphMany
+    {
+        return $this->morphMany(Pin::class, 'owner');
+    }
+
+    public function pin()
+    {
+        return $this->pins()->latest()->first();
     }
 }
