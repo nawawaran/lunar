@@ -14,7 +14,7 @@ return [
     'permissions.settings.label' => 'Settings',
     'permissions.settings.description' => 'Gives access to the settings area of the hub',
     'permissions.settings:core.label' => 'Core Settings',
-    'permissions.settings:core.description' => 'Access fundamental store settings, such as channels, languages, etc',
+    'permissions.settings:core.description' => 'Access fundamental store settings, such as channels, etc',
     'permissions.settings:manage-staff.label' => 'Manage Staff',
     'permissions.settings:manage-staff.description' => 'Allow the staff member to edit other staff',
     'permissions.settings:manage-attributes.label' => 'Manage Attributes',
