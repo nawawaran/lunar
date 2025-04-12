@@ -8,7 +8,6 @@ use Lunar\Base\BaseModel;
 use Lunar\Base\Traits\HasDefaultRecord;
 use Lunar\Base\Traits\HasMacros;
 use Lunar\Database\Factories\LanguageFactory;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property int $id
@@ -20,7 +19,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  */
 class Language extends BaseModel implements Contracts\Language
 {
-    use BelongsToTenant;
     use HasDefaultRecord;
     use HasFactory;
     use HasMacros;
