@@ -19,6 +19,7 @@
         "ext-exif": "*",
         "ext-intl": "*",
         "filament/filament": "^3.2.25",
+        "filament/notifications": "^3.3",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "guzzlehttp/guzzle": "^7.3",
         "kalnoy/nestedset": "^v6.x-dev",
