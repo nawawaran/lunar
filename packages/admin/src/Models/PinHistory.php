@@ -3,10 +3,10 @@
 namespace Lunar\Admin\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Pin extends Model
+class PinHistory extends Model
 {
     use HasFactory;
 
@@ -14,10 +14,6 @@ class Pin extends Model
         'owner_id',
         'owner_type',
         'pin',
-        'failed_attempts',
-        'last_failed_attempt',
-        'locked_until',
-        'expired_at',
     ];
 
     protected $casts = [
