@@ -8,4 +8,7 @@ enum PinAuditAction: string
     case CHANGE = 'change';
     case RESET = 'reset';
     case ATTEMPT = 'attempt';
+
+    case LOCKED = 'locked';
+
 }
