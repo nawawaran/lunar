@@ -17,11 +17,14 @@ class Pin extends Model
         'failed_attempts',
         'last_failed_attempt',
         'locked_until',
-        'expired_at',
+        'expires_at',
     ];
 
     protected $casts = [
         'pin' => 'hashed',
+        'locked_until' => 'datetime',
+        'last_failed_attempt' => 'datetime',
+        'expires_at' => 'datetime',
     ];
 
 

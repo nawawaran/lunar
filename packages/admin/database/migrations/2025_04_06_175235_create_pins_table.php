@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->integer('failed_attempts')->default(0);
             $table->timestamp('last_failed_attempt')->nullable();
             $table->timestamp('locked_until')->nullable();
-            $table->timestamp('expired_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
     }
