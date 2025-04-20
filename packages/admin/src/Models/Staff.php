@@ -2,7 +2,6 @@
 
 namespace Lunar\Admin\Models;
 
-use App\Models\PinHistory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
@@ -149,7 +148,7 @@ class Staff extends Authenticatable implements FilamentUser, HasName
         return $this->morphMany(PinHistory::class, 'owner');
     }
 
-    public function pin():MorphOne
+    public function pin(): MorphOne
     {
         return $this->morphOne(Pin::class, 'owner');
     }
