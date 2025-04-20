@@ -2,7 +2,7 @@
 
 namespace Lunar\Admin\Enums;
 
-enum PinAuditActions: string
+enum PinAuditAction: string
 {
     case CREATE = 'create';
     case CHANGE = 'change';
