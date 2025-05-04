@@ -20,7 +20,7 @@ use Lunar\Models\Contracts\Customer;
 
 class CustomerResource extends BaseResource
 {
-    protected static ?string $permission = 'sales:manage-customers';
+    protected static ?string $permission = 'sales:manage-customers_admin';
 
     protected static ?string $model = Customer::class;
 
@@ -162,7 +162,7 @@ class CustomerResource extends BaseResource
             ->relationship(
                 name: 'customerGroups',
                 titleAttribute: 'name',
-                modifyQueryUsing: fn (Builder $query) => $query->distinct(
+                modifyQueryUsing: fn(Builder $query) => $query->distinct(
                     ['id', 'name', 'handle', 'default']
                 )
             );

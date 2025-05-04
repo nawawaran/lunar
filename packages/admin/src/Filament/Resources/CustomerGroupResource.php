@@ -17,7 +17,7 @@ use Lunar\Models\Contracts\CustomerGroup;
 
 class CustomerGroupResource extends BaseResource
 {
-    protected static ?string $permission = 'settings:core';
+    protected static ?string $permission = 'settings:core_admin';
 
     protected static ?string $model = CustomerGroup::class;
 
@@ -109,7 +109,7 @@ class CustomerGroupResource extends BaseResource
                     Badge::make('default')
                         ->label(__('lunarpanel::customergroup.table.default.label'))
                         ->color('gray')
-                        ->visible(fn (Model $record) => $record->default),
+                        ->visible(fn(Model $record) => $record->default),
                 ])
                 ->label(__('lunarpanel::customergroup.table.name.label')),
             Tables\Columns\TextColumn::make('handle')
