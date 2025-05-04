@@ -19,7 +19,7 @@ use Lunar\Models\Contracts\Brand;
 
 class BrandResource extends BaseResource
 {
-    protected static ?string $permission = 'catalog:manage-products';
+    protected static ?string $permission = 'catalog:manage-products_admin';
 
     protected static ?string $model = Brand::class;
 
@@ -125,7 +125,7 @@ class BrandResource extends BaseResource
             Tables\Columns\TextColumn::make('products_count')
                 ->counts('products')
                 ->formatStateUsing(
-                    fn ($state) => number_format($state, 0)
+                    fn($state) => number_format($state, 0)
                 )
                 ->label(__('lunarpanel::brand.table.products_count.label')),
         ];

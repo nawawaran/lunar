@@ -17,7 +17,6 @@ use Lunar\Base\Traits\Searchable;
 use Lunar\Database\Factories\BrandFactory;
 use Lunar\Facades\DB;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property int $id
@@ -28,7 +27,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  */
 class Brand extends BaseModel implements Contracts\Brand, SpatieHasMedia
 {
-    use BelongsToTenant;
     use HasAttributes;
     use HasFactory;
     use HasMacros;
