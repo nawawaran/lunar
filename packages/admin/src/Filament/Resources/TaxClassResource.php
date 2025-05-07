@@ -19,7 +19,7 @@ class TaxClassResource extends BaseResource
 {
     protected static ?string $cluster = Taxes::class;
 
-    protected static ?string $permission = 'settings:core';
+    protected static ?string $permission = 'settings:core_admin';
 
     protected static ?string $model = TaxClass::class;
 
@@ -91,7 +91,7 @@ class TaxClassResource extends BaseResource
                     Badge::make('default')
                         ->label(__('lunarpanel::taxclass.table.default.label'))
                         ->color('gray')
-                        ->visible(fn (Model $record) => $record->default),
+                        ->visible(fn(Model $record) => $record->default),
                 ])
                 ->label(__('lunarpanel::taxclass.table.name.label')),
         ];

@@ -17,7 +17,7 @@ class TaxRateResource extends BaseResource
 {
     protected static ?string $cluster = Taxes::class;
 
-    protected static ?string $permission = 'settings:core';
+    protected static ?string $permission = 'settings:core_admin';
 
     protected static ?string $model = TaxRate::class;
 

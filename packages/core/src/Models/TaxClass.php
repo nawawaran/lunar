@@ -8,7 +8,6 @@ use Lunar\Base\BaseModel;
 use Lunar\Base\Traits\HasDefaultRecord;
 use Lunar\Base\Traits\HasMacros;
 use Lunar\Database\Factories\TaxClassFactory;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property int $id
@@ -19,7 +18,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  */
 class TaxClass extends BaseModel implements Contracts\TaxClass
 {
-    use BelongsToTenant;
     use HasDefaultRecord;
     use HasFactory;
     use HasMacros;
@@ -29,7 +27,6 @@ class TaxClass extends BaseModel implements Contracts\TaxClass
         static::updated(function ($taxClass) {
             if ($taxClass->default) {
                 TaxClass::whereDefault(true)->where('id', '!=', $taxClass->id)
-                    ->where('tenant_id', $taxClass->tenant_id)
                     ->update([
                         'default' => false,
                     ]);
@@ -39,7 +36,6 @@ class TaxClass extends BaseModel implements Contracts\TaxClass
         static::created(function ($taxClass) {
             if ($taxClass->default) {
                 TaxClass::whereDefault(true)->where('id', '!=', $taxClass->id)
-                    ->where('tenant_id', $taxClass->tenant_id)
                     ->update([
                         'default' => false,
                     ]);

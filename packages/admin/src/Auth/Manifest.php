@@ -32,7 +32,7 @@ class Manifest
      */
     public function getRoles(bool $refresh = false): Collection
     {
-        if (! $refresh && ! is_null($this->roles)) {
+        if (!$refresh && !is_null($this->roles)) {
             return $this->roles;
         }
 
@@ -62,7 +62,7 @@ class Manifest
      */
     public function getPermissions(bool $refresh = false): Collection
     {
-        if (! $refresh && ! is_null($this->permissions)) {
+        if (!$refresh && !is_null($this->permissions)) {
             return $this->permissions;
         }
 
@@ -118,7 +118,7 @@ class Manifest
             return null;
         }
 
-        return $this->permissions->first(fn ($parent) => $parent->handle === $crumbs[0]);
+        return $this->permissions->first(fn($parent) => $parent->handle === $crumbs[0]);
     }
 
     /**
@@ -139,7 +139,6 @@ class Manifest
     {
         return [
             'settings',
-            'settings:core',
             'settings:manage-staff',
             'settings:manage-attributes',
             'catalog:manage-products',
@@ -164,7 +163,7 @@ class Manifest
             // Do we already have a admin with this handle?
             $existing = $this->admins->contains($admin);
 
-            if (! $existing) {
+            if (!$existing) {
                 $this->admins->push($admin);
             }
         }
@@ -188,6 +187,6 @@ class Manifest
      */
     public function getRolesWithoutAdmin(bool $refresh = false): Collection
     {
-        return $this->getRoles($refresh)->reject(fn ($r) => $this->getAdmin()->contains($r->handle));
+        return $this->getRoles($refresh)->reject(fn($r) => $this->getAdmin()->contains($r->handle));
     }
 }

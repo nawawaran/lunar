@@ -19,7 +19,7 @@ use Lunar\Models\Contracts\Channel;
 
 class ChannelResource extends BaseResource
 {
-    protected static ?string $permission = 'settings:core';
+    protected static ?string $permission = 'settings:core_admin';
 
     protected static ?string $model = Channel::class;
 
@@ -121,7 +121,7 @@ class ChannelResource extends BaseResource
                     Badge::make('default')
                         ->label(__('lunarpanel::channel.table.default.label'))
                         ->color('gray')
-                        ->visible(fn (Model $record) => $record->default),
+                        ->visible(fn(Model $record) => $record->default),
                 ])
                 ->label(__('lunarpanel::channel.table.name.label')),
             Tables\Columns\TextColumn::make('handle')

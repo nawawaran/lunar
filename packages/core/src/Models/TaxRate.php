@@ -9,7 +9,6 @@ use Lunar\Base\BaseModel;
 use Lunar\Base\Traits\HasMacros;
 use Lunar\Database\Factories\TaxRateFactory;
 use Lunar\Facades\DB;
-use Stancl\Tenancy\Database\Concerns\BelongsToPrimaryModel;
 
 /**
  * @property int $id
@@ -21,14 +20,9 @@ use Stancl\Tenancy\Database\Concerns\BelongsToPrimaryModel;
  */
 class TaxRate extends BaseModel implements Contracts\TaxRate
 {
-    use BelongsToPrimaryModel;
     use HasFactory;
     use HasMacros;
 
-    public function getRelationshipToPrimaryModel(): string
-    {
-        return 'taxZone';
-    }
 
     /**
      * Return a new factory instance for the model.

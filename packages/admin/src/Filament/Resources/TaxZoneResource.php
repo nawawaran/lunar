@@ -21,7 +21,7 @@ class TaxZoneResource extends BaseResource
 {
     protected static ?string $cluster = Taxes::class;
 
-    protected static ?string $permission = 'settings:core';
+    protected static ?string $permission = 'settings:core_admin';
 
     protected static ?string $model = TaxZone::class;
 
@@ -88,7 +88,7 @@ class TaxZoneResource extends BaseResource
     {
         return Forms\Components\Select::make('zone_countries')
             ->label(__('lunarpanel::taxzone.form.zone_countries.label'))
-            ->visible(fn ($get) => $get('zone_type') == 'country')
+            ->visible(fn($get) => $get('zone_type') == 'country')
             ->dehydrated(false)
             ->options(Country::get()->pluck('name', 'iso3'))
             ->multiple()
@@ -102,7 +102,7 @@ class TaxZoneResource extends BaseResource
                 $component->state(
                     $relatedModels
                         ->pluck('country.iso3')
-                        ->map(static fn ($key): string => strval($key))
+                        ->map(static fn($key): string => strval($key))
                         ->toArray(),
                 );
             })->getOptionLabelsUsing(static function (Model $record): array {
@@ -126,7 +126,7 @@ class TaxZoneResource extends BaseResource
     {
         return Forms\Components\Select::make('zone_country')
             ->label(__('lunarpanel::taxzone.form.zone_country.label'))
-            ->visible(fn ($get) => $get('zone_type') !== 'country')
+            ->visible(fn($get) => $get('zone_type') !== 'country')
             ->dehydrated(false)
             ->required()
             ->options(Country::get()->pluck('name', 'id'))
@@ -151,9 +151,9 @@ class TaxZoneResource extends BaseResource
     {
         return Forms\Components\Select::make('zone_states')
             ->label(__('lunarpanel::taxzone.form.zone_states.label'))
-            ->visible(fn ($get) => $get('zone_type') == 'states')
+            ->visible(fn($get) => $get('zone_type') == 'states')
             ->dehydrated(false)
-            ->options(fn ($get) => State::where('country_id', $get('zone_country'))->get()->pluck('name', 'code'))
+            ->options(fn($get) => State::where('country_id', $get('zone_country'))->get()->pluck('name', 'code'))
             ->multiple()
             ->required()
             ->loadStateFromRelationshipsUsing(static function (Forms\Components\Select $component, Model $record): void {
@@ -165,7 +165,7 @@ class TaxZoneResource extends BaseResource
                 $component->state(
                     $relatedModels
                         ->pluck('state.code')
-                        ->map(static fn ($key): string => strval($key))
+                        ->map(static fn($key): string => strval($key))
                         ->toArray(),
                 );
             })->getOptionLabelsUsing(static function (Model $record): array {
@@ -189,7 +189,7 @@ class TaxZoneResource extends BaseResource
     {
         return Forms\Components\Textarea::make('zone_postcodes')
             ->label(__('lunarpanel::taxzone.form.zone_postcodes.label'))
-            ->visible(fn ($get) => $get('zone_type') == 'postcodes')
+            ->visible(fn($get) => $get('zone_type') == 'postcodes')
             ->dehydrated(false)
             ->rows(10)
             ->helperText(__('lunarpanel::taxzone.form.zone_postcodes.helper'))
@@ -224,7 +224,7 @@ class TaxZoneResource extends BaseResource
             });
 
         $taxZone->countries()->createMany(
-            $countriesToAssign->map(fn ($countryId) => [
+            $countriesToAssign->map(fn($countryId) => [
                 'country_id' => $countryId,
             ])
         );
@@ -244,7 +244,7 @@ class TaxZoneResource extends BaseResource
             });
 
         $taxZone->states()->createMany(
-            $statesToAssign->map(fn ($stateId) => [
+            $statesToAssign->map(fn($stateId) => [
                 'state_id' => $stateId,
             ])
         );
@@ -324,7 +324,7 @@ class TaxZoneResource extends BaseResource
                     Badge::make('default')
                         ->label(__('lunarpanel::taxzone.table.default.label'))
                         ->color('gray')
-                        ->visible(fn (Model $record) => $record->default),
+                        ->visible(fn(Model $record) => $record->default),
                 ])
                 ->label(__('lunarpanel::taxzone.table.name.label')),
             Tables\Columns\TextColumn::make('zone_type')

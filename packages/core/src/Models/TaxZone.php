@@ -10,7 +10,6 @@ use Lunar\Base\BaseModel;
 use Lunar\Base\Traits\HasDefaultRecord;
 use Lunar\Base\Traits\HasMacros;
 use Lunar\Database\Factories\TaxZoneFactory;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property int $id
@@ -24,16 +23,15 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  */
 class TaxZone extends BaseModel implements Contracts\TaxZone
 {
-    use BelongsToTenant;
     use HasDefaultRecord;
     use HasFactory;
     use HasMacros;
 
     protected static function booted(): void
     {
-        $handleDefaultFunction = fn (TaxZone $taxZone) => TaxZone::when(
+        $handleDefaultFunction = fn(TaxZone $taxZone) => TaxZone::when(
             $taxZone->default,
-            fn ($query) => $query->where('id', '!=', $taxZone->id)->update([
+            fn($query) => $query->where('id', '!=', $taxZone->id)->update([
                 'default' => false,
             ])
         );

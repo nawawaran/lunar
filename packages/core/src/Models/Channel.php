@@ -12,7 +12,6 @@ use Lunar\Base\Traits\HasDefaultRecord;
 use Lunar\Base\Traits\HasMacros;
 use Lunar\Base\Traits\LogsActivity;
 use Lunar\Database\Factories\ChannelFactory;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property int $id
@@ -26,7 +25,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  */
 class Channel extends BaseModel implements Contracts\Channel
 {
-    use BelongsToTenant;
     use HasDefaultRecord;
     use HasFactory;
     use HasMacros;
