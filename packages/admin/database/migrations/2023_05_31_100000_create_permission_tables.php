@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         $teams = config('permission.teams');
@@ -21,7 +20,7 @@ return new class extends Migration
             throw new \Exception('Error: team_foreign_key on config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
 
-        if (! Schema::hasTable($tableNames['permissions'])) {
+        if (!Schema::hasTable($tableNames['permissions'])) {
             Schema::create($tableNames['permissions'], function (Blueprint $table) {
                 $table->bigIncrements('id'); // permission id
                 $table->string('name');       // For MySQL 8.0 use string('name', 125);
@@ -31,7 +30,7 @@ return new class extends Migration
             });
         }
 
-        if (! Schema::hasTable($tableNames['roles'])) {
+        if (!Schema::hasTable($tableNames['roles'])) {
             Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
                 $table->bigIncrements('id'); // role id
                 if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
@@ -41,7 +40,7 @@ return new class extends Migration
                 $table->string('name');       // For MySQL 8.0 use string('name', 125);
                 $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
                 $table->timestamps();
-                $table->foreignUuid('tenant_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+                $table->foreignId('tenant_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
                 if ($teams || config('permission.testing')) {
                     $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name', 'tenant_id']);
                 } else {
@@ -50,7 +49,7 @@ return new class extends Migration
             });
         }
 
-        if (! Schema::hasTable($tableNames['model_has_permissions'])) {
+        if (!Schema::hasTable($tableNames['model_has_permissions'])) {
             Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
                 $table->unsignedBigInteger($pivotPermission);
 
@@ -79,7 +78,7 @@ return new class extends Migration
             });
         }
 
-        if (! Schema::hasTable($tableNames['model_has_roles'])) {
+        if (!Schema::hasTable($tableNames['model_has_roles'])) {
             Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
                 $table->unsignedBigInteger($pivotRole);
 
@@ -108,7 +107,7 @@ return new class extends Migration
             });
         }
 
-        if (! Schema::hasTable($tableNames['role_has_permissions'])) {
+        if (!Schema::hasTable($tableNames['role_has_permissions'])) {
             Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
                 $table->unsignedBigInteger($pivotPermission);
                 $table->unsignedBigInteger($pivotRole);

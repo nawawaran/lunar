@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignUuid('tenant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('tenant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->unique(['email', 'tenant_id']);
             $table->unique(['phone', 'tenant_id']);
             $table->unique(['username', 'tenant_id']);
