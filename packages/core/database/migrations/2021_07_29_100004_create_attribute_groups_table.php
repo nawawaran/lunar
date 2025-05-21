@@ -11,11 +11,9 @@ return new class extends Migration {
             $table->id();
             $table->string('attributable_type')->index();
             $table->json('name');
-            $table->string('handle'); // ->unique();
+            $table->string('handle')->unique();
             $table->integer('position')->index();
             $table->timestamps();
-            $table->foreignId('tenant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->unique(['handle', 'tenant_id']);
         });
     }
 

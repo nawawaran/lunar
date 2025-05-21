@@ -9,7 +9,6 @@ use Lunar\Base\BaseModel;
 use Lunar\Base\Traits\HasMacros;
 use Lunar\Base\Traits\HasTranslations;
 use Lunar\Database\Factories\AttributeGroupFactory;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property int $id
@@ -22,7 +21,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  */
 class AttributeGroup extends BaseModel implements Contracts\AttributeGroup
 {
-    use BelongsToTenant;
     use HasFactory;
     use HasMacros;
     use HasTranslations;

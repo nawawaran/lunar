@@ -9,7 +9,6 @@ use Lunar\Base\BaseModel;
 use Lunar\Base\Traits\HasAttributes;
 use Lunar\Base\Traits\HasMacros;
 use Lunar\Database\Factories\ProductTypeFactory;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property int $id
@@ -19,7 +18,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  */
 class ProductType extends BaseModel implements Contracts\ProductType
 {
-    use BelongsToTenant;
     use HasAttributes;
     use HasFactory;
     use HasMacros;

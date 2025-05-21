@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->json('configuration');
             $table->boolean('system');
             $table->timestamps();
-            $table->foreignId('tenant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
