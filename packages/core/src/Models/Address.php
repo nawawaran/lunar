@@ -18,6 +18,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToPrimaryModel;
  * @property string $first_name
  * @property string $last_name
  * @property ?string $company_name
+ * @property ?string $tax_identifier
  * @property string $line_one
  * @property ?string $line_two
  * @property ?string $line_three

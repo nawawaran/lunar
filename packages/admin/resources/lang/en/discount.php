@@ -74,6 +74,12 @@ return [
             'label' => 'Automatically add rewards',
             'helper_text' => 'Switch on to add reward products when not present in the basket.',
         ],
+        'fixed_value' => [
+            'label' => 'Fixed value',
+        ],
+        'percentage' => [
+            'label' => 'Percentage',
+        ],
     ],
     'table' => [
         'name' => [
@@ -103,10 +109,19 @@ return [
         'ends_at' => [
             'label' => 'End Date',
         ],
+        'created_at' => [
+            'label' => 'Created At',
+        ],
+        'coupon' => [
+            'label' => 'Coupon',
+        ],
     ],
     'pages' => [
         'availability' => [
             'label' => 'Availability',
+        ],
+        'edit' => [
+            'title' => 'Basic Information',
         ],
         'limitations' => [
             'label' => 'Limitations',
@@ -145,6 +160,20 @@ return [
                             'label' => 'Exclusion',
                         ],
                     ],
+                ],
+            ],
+        ],
+        'customers' => [
+            'title' => 'Customers',
+            'description' => 'Select which customers this discount should be limited to.',
+            'actions' => [
+                'attach' => [
+                    'label' => 'Attach Customer',
+                ],
+            ],
+            'table' => [
+                'name' => [
+                    'label' => 'Name',
                 ],
             ],
         ],
@@ -219,11 +248,11 @@ return [
             ],
         ],
         'rewards' => [
-            'title' => 'Product Rewards',
+            'title' => 'Rewards',
             'description' => 'Select which products will be discounted if they exist in the cart and the above conditions are met.',
             'actions' => [
                 'attach' => [
-                    'label' => 'Add Product',
+                    'label' => 'Add Reward',
                 ],
             ],
             'table' => [
@@ -254,11 +283,11 @@ return [
             ],
         ],
         'conditions' => [
-            'title' => 'Product Conditions',
-            'description' => 'Select the products required for the discount to apply.',
+            'title' => 'Conditions',
+            'description' => 'Select the conditions required for the discount to apply.',
             'actions' => [
                 'attach' => [
-                    'label' => 'Add Product',
+                    'label' => 'Add Condition',
                 ],
             ],
             'table' => [

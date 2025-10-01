@@ -10,6 +10,10 @@ return [
         'manage' => 'Gérer',
     ],
 
+    'tabs' => [
+        'all' => 'Toutes',
+    ],
+
     'transactions' => [
         'capture' => 'Capturé',
         'intent' => 'Intention',
@@ -79,6 +83,9 @@ return [
             ],
             'company_name' => [
                 'label' => 'Nom de l\'entreprise',
+            ],
+            'tax_identifier' => [
+                'label' => 'Identifiant fiscal',
             ],
             'contact_phone' => [
                 'label' => 'Téléphone',

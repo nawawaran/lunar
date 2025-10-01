@@ -5,6 +5,7 @@ namespace Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers;
 use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Lunar\Admin\Support\RelationManagers\BaseRelationManager;
 
 class BrandLimitationRelationManager extends BaseRelationManager
@@ -12,6 +13,11 @@ class BrandLimitationRelationManager extends BaseRelationManager
     protected static bool $isLazy = false;
 
     protected static string $relationship = 'brands';
+
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __('lunarpanel::brand.plural_label');
+    }
 
     public function isReadOnly(): bool
     {
@@ -41,7 +47,8 @@ class BrandLimitationRelationManager extends BaseRelationManager
                 })->preloadRecordSelect()
                     ->label(
                         __('lunarpanel::discount.relationmanagers.brands.actions.attach.label')
-                    ),
+                    )
+                    ->recordSelectSearchColumns(['name']),
             ])->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label(
@@ -55,6 +62,8 @@ class BrandLimitationRelationManager extends BaseRelationManager
                     ),
             ])->actions([
                 Tables\Actions\DetachAction::make(),
+            ])->bulkActions([
+                Tables\Actions\DetachBulkAction::make(),
             ]);
     }
 }

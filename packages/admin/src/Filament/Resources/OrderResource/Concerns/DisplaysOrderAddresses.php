@@ -9,8 +9,8 @@ use Filament\Infolists\Components\Actions\Action;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Support\Arr;
+use Lunar\Models\Contracts\OrderAddress as OrderAddressContract;
 use Lunar\Models\Country;
-use Lunar\Models\OrderAddress;
 use Lunar\Models\State;
 
 trait DisplaysOrderAddresses
@@ -52,6 +52,10 @@ trait DisplaysOrderAddresses
                 ]),
             Forms\Components\TextInput::make('company_name')
                 ->label(__('lunarpanel::order.form.address.company_name.label'))
+                ->autocomplete(false)
+                ->maxLength(255),
+            Forms\Components\TextInput::make('tax_identifier')
+                ->label(__('lunarpanel::order.form.address.tax_identifier.label'))
                 ->autocomplete(false)
                 ->maxLength(255),
             Forms\Components\Grid::make()
@@ -138,6 +142,7 @@ trait DisplaysOrderAddresses
                         if ($address?->id ?? false) {
                             return collect([
                                 'company_name' => $address->company_name,
+                                'tax_identifier' => $address->tax_identifier,
                                 'fullName' => $address->fullName,
                                 'line_one' => $address->line_one,
                                 'line_two' => $address->line_two,
@@ -172,7 +177,7 @@ trait DisplaysOrderAddresses
             ]);
     }
 
-    private static function addressesMatch(?OrderAddress $original = null, ?OrderAddress $comparison = null): bool
+    private static function addressesMatch(?OrderAddressContract $original = null, ?OrderAddressContract $comparison = null): bool
     {
         if (! $original || ! $comparison) {
             return false;

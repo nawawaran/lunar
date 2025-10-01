@@ -15,13 +15,13 @@ use Illuminate\Database\Eloquent\Model;
 use Lunar\Admin\Filament\Resources\BrandResource\Pages;
 use Lunar\Admin\Support\Forms\Components\Attributes;
 use Lunar\Admin\Support\Resources\BaseResource;
-use Lunar\Models\Contracts\Brand;
+use Lunar\Models\Contracts\Brand as BrandContract;
 
 class BrandResource extends BaseResource
 {
     protected static ?string $permission = 'catalog:manage-products_admin';
 
-    protected static ?string $model = Brand::class;
+    protected static ?string $model = BrandContract::class;
 
     protected static ?int $navigationSort = 3;
 
@@ -91,7 +91,7 @@ class BrandResource extends BaseResource
 
     protected static function getAttributeDataFormComponent(): Component
     {
-        return Attributes::make()->statePath('attribute_data');
+        return Attributes::make();
     }
 
     public static function getDefaultTable(Table $table): Table
@@ -121,7 +121,8 @@ class BrandResource extends BaseResource
                 ->square()
                 ->label(''),
             Tables\Columns\TextColumn::make('name')
-                ->label(__('lunarpanel::brand.table.name.label')),
+                ->label(__('lunarpanel::brand.table.name.label'))
+                ->searchable(),
             Tables\Columns\TextColumn::make('products_count')
                 ->counts('products')
                 ->formatStateUsing(
