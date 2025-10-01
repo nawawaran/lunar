@@ -149,7 +149,7 @@ class LunarPanelManager
             'chartSecondary' => Color::Green,
         ]);
 
-        if (app('request')->is($panel->getPath().'*')) {
+        if (app('request')->is($panel->getPath() . '*')) {
             app('config')->set('livewire.inject_assets', true);
         }
 
@@ -193,13 +193,13 @@ class LunarPanelManager
         $brandAsset = function ($asset) {
             $vendorPath = 'vendor/lunarpanel/';
 
-            if (file_exists(public_path($vendorPath.$asset))) {
-                return asset($vendorPath.$asset);
+            if (file_exists(public_path($vendorPath . $asset))) {
+                return asset($vendorPath . $asset);
             } else {
                 $type = str($asset)
                     ->endsWith('.png') ? 'image/png' : 'image/svg+xml';
 
-                return "data:{$type};base64,".base64_encode(file_get_contents(__DIR__.'/../public/'.$asset));
+                return "data:{$type};base64," . base64_encode(file_get_contents(__DIR__ . '/../public/' . $asset));
             }
         };
 
@@ -250,7 +250,7 @@ class LunarPanelManager
             ->font('Poppins')
             ->middleware($panelMiddleware)
             ->assets([
-                Css::make('lunar-panel', __DIR__.'/../resources/dist/lunar-panel.css'),
+                Css::make('lunar-panel', __DIR__ . '/../resources/dist/lunar-panel.css'),
             ], 'lunarphp/panel')
             ->pages(
                 static::getPages()
@@ -259,7 +259,7 @@ class LunarPanelManager
                 static::getResources()
             )
             ->discoverClusters(
-                in: realpath(__DIR__.'/Filament/Clusters'),
+                in: realpath(__DIR__ . '/Filament/Clusters'),
                 for: 'Lunar\Admin\Filament\Clusters'
             )
             ->widgets(
@@ -269,7 +269,7 @@ class LunarPanelManager
                 Authenticate::class,
             ])
             ->plugins($plugins)
-            ->discoverLivewireComponents(__DIR__.'/Livewire', 'Lunar\\Admin\\Livewire')
+            ->discoverLivewireComponents(__DIR__ . '/Livewire', 'Lunar\\Admin\\Livewire')
             ->livewireComponents([
                 Resources\OrderResource\Pages\Components\OrderItemsTable::class,
                 \Lunar\Admin\Filament\Resources\CollectionGroupResource\Widgets\CollectionTreeView::class,
@@ -293,9 +293,9 @@ class LunarPanelManager
             $this->extensions[$class] = [
                 ...$this->extensions[$class] ?? [],
                 ...collect($extension)->reject(
-                    fn ($extension) => ! class_exists($extension)
+                    fn($extension) => ! class_exists($extension)
                 )->map(
-                    fn ($extension) => app($extension)
+                    fn($extension) => app($extension)
                 )->values()->toArray(),
             ];
         }
