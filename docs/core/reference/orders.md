@@ -97,7 +97,7 @@ $cart->canCreateOrder();
 Under the hood this will use the `ValidateCartForOrderCreation` class which lunar provides and throw any validation
 exceptions with helpful messages if the cart isn't ready to create an order.
 
-You can specify you're own class to handle this in `config/cart.php`.
+You can specify your own class to handle this in `config/cart.php`.
 
 ```php
 return [
@@ -130,23 +130,17 @@ class MyCustomValidator extends \Lunar\Validation\BaseValidator
 }
 ```
 
-## Order Reference Generating
+## Order Reference Generation
 
 By default Lunar will generate a new order reference for you when you create an order from a cart. The format for this
 is:
 
 ```
-{year}-{month}-{0..0}{orderId}
+{prefix?}{0..0}{orderId}
 ```
 
-`{0..0}` indicates the order id will be padded with up to four `0`'s for example:
-
-```
-2022-01-0001
-2022-01-0011
-2022-01-0111
-2022-01-1111
-```
+`{0..0}` indicates the order id will be padded until the length is 8 digits (not including the prefix)
+The prefix is optional and defined in the `lunar/orders.php` config file, which gives access to a number of settings you can change.
 
 ### Custom Generators
 
@@ -256,6 +250,7 @@ If you are using the `createOrder` method on a cart, this is all handled for you
     'first_name' => 'Jacob',
     'last_name' => null,
     'company_name' => null,
+    'tax_identifier' => null,
     'line_one' => '123 Foo Street',
     'line_two' => null,
     'line_three' => null,

@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Lunar\Base\BaseModel;
 use Lunar\Base\Traits\HasMacros;
+use Lunar\Base\Traits\LogsActivity;
 use Lunar\Database\Factories\TagFactory;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Lunar\Facades\DB;
 
 /**
  * @property int $id
@@ -20,6 +22,16 @@ class Tag extends BaseModel implements Contracts\Tag
     use BelongsToTenant;
     use HasFactory;
     use HasMacros;
+    use LogsActivity;
+
+    public static function booted(): void
+    {
+        static::deleting(function (self $tag) {
+            DB::table(config('lunar.database.table_prefix').'taggables')
+                ->where('tag_id', $tag->id)
+                ->delete();
+        });
+    }
 
     /**
      * Return a new factory instance for the model.

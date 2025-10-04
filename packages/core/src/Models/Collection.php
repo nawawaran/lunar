@@ -10,6 +10,7 @@ use Kalnoy\Nestedset\NodeTrait;
 use Kalnoy\Nestedset\QueryBuilder;
 use Lunar\Base\BaseModel;
 use Lunar\Base\Casts\AsAttributeData;
+use Lunar\Base\HasThumbnailImage;
 use Lunar\Base\Traits\HasChannels;
 use Lunar\Base\Traits\HasCustomerGroups;
 use Lunar\Base\Traits\HasMacros;
@@ -34,7 +35,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $deleted_at
  */
-class Collection extends BaseModel implements Contracts\Collection, SpatieHasMedia
+class Collection extends BaseModel implements Contracts\Collection, HasThumbnailImage, SpatieHasMedia
 {
     use BelongsToTenant;
     use HasChannels,
@@ -151,7 +152,8 @@ class Collection extends BaseModel implements Contracts\Collection, SpatieHasMed
         return new QueryBuilder($query);
     }
 
-    /**
-     * Get the seller that owns the collection.
-     */
+    public function getThumbnailImage(): string
+    {
+        return $this->thumbnail?->getUrl('small') ?? '';
+    }
 }

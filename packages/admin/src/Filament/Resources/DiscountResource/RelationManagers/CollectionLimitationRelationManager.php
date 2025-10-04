@@ -7,12 +7,18 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Lunar\Admin\Support\RelationManagers\BaseRelationManager;
+use Lunar\Models\Collection;
 
 class CollectionLimitationRelationManager extends BaseRelationManager
 {
     protected static bool $isLazy = false;
 
     protected static string $relationship = 'collections';
+
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __('lunarpanel::collection.plural_label');
+    }
 
     public function isReadOnly(): bool
     {
@@ -39,7 +45,8 @@ class CollectionLimitationRelationManager extends BaseRelationManager
                         )->default('limitation'),
                 ])->recordTitle(function ($record) {
                     return $record->attr('name');
-                })->preloadRecordSelect()
+                })->recordSelectSearchColumns(['attribute_data->name'])
+                    ->preloadRecordSelect()
                     ->label(
                         __('lunarpanel::discount.relationmanagers.collections.actions.attach.label')
                     ),
@@ -48,6 +55,7 @@ class CollectionLimitationRelationManager extends BaseRelationManager
                     ->label(
                         __('lunarpanel::discount.relationmanagers.collections.table.name.label')
                     )
+                    ->description(fn (Collection $record): string => $record->breadcrumb->implode(' > '))
                     ->formatStateUsing(
                         fn (Model $record) => $record->attr('name')
                     ),
@@ -59,6 +67,8 @@ class CollectionLimitationRelationManager extends BaseRelationManager
                     ),
             ])->actions([
                 Tables\Actions\DetachAction::make(),
+            ])->bulkActions([
+                Tables\Actions\DetachBulkAction::make(),
             ]);
     }
 }

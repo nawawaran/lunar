@@ -16,13 +16,13 @@ use Lunar\Admin\Filament\Resources\CustomerResource\RelationManagers\OrdersRelat
 use Lunar\Admin\Filament\Resources\CustomerResource\RelationManagers\UserRelationManager;
 use Lunar\Admin\Filament\Resources\CustomerResource\Widgets\CustomerStatsOverviewWidget;
 use Lunar\Admin\Support\Resources\BaseResource;
-use Lunar\Models\Contracts\Customer;
+use Lunar\Models\Contracts\Customer as CustomerContract;
 
 class CustomerResource extends BaseResource
 {
     protected static ?string $permission = 'sales:manage-customers_admin';
 
-    protected static ?string $model = Customer::class;
+    protected static ?string $model = CustomerContract::class;
 
     protected static ?int $navigationSort = 2;
 
@@ -86,7 +86,7 @@ class CustomerResource extends BaseResource
             static::getCompanyNameFormComponent(),
             Forms\Components\Group::make()->schema([
                 static::getAccountRefFormComponent(),
-                static::getVatNoFormComponent(),
+                static::getTaxIdFormComponent(),
             ])->columns(2),
         ];
     }
@@ -109,7 +109,7 @@ class CustomerResource extends BaseResource
 
     protected static function getAttributeDataFormComponent(): Component
     {
-        return \Lunar\Admin\Support\Forms\Components\Attributes::make()->statePath('attribute_data');
+        return \Lunar\Admin\Support\Forms\Components\Attributes::make();
     }
 
     protected static function getFirstNameFormComponent(): Component
@@ -147,10 +147,10 @@ class CustomerResource extends BaseResource
             ->maxLength(255);
     }
 
-    protected static function getVatNoFormComponent(): Component
+    protected static function getTaxIdFormComponent(): Component
     {
-        return Forms\Components\TextInput::make('vat_no')
-            ->label(__('lunarpanel::customer.form.vat_no.label'))
+        return Forms\Components\TextInput::make('tax_identifier')
+            ->label(__('lunarpanel::customer.form.tax_identifier.label'))
             ->nullable()
             ->maxLength(255);
     }
@@ -184,15 +184,39 @@ class CustomerResource extends BaseResource
                     ->label(__('lunarpanel::customer.table.company_name.label'))
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('vat_no')
-                    ->label(__('lunarpanel::customer.table.vat_no.label'))
+                Tables\Columns\TextColumn::make('tax_identifier')
+                    ->label(__('lunarpanel::customer.table.tax_identifier.label'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('account_ref')
                     ->label(__('lunarpanel::customer.table.account_reference.label'))
                     ->sortable(),
+                Tables\Columns\TextColumn::make('customerGroups.name')
+                    ->label(__('lunarpanel::customergroup.label'))
+                    ->badge()
+                    ->limitList(1)
+                    ->tooltip(function (Tables\Columns\TextColumn $column, Model $record): ?string {
+                        if ($record->customerGroups->count() <= $column->getListLimit()) {
+                            return null;
+                        }
+
+                        return $record->customerGroups
+                            ->map(fn ($customerGroup) => $customerGroup->name)
+                            ->implode(', ');
+                    }),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('customer_group')
+                    ->label(__('lunarpanel::customergroup.label'))
+                    ->relationship(
+                        name: 'customerGroups',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: fn (Builder $query) => $query->distinct(
+                            ['id', 'name', 'handle', 'default']
+                        )
+                    )
+                    ->multiple()
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -236,7 +260,7 @@ class CustomerResource extends BaseResource
             'last_name',
             'company_name',
             'account_ref',
-            'vat_no',
+            'tax_identifier',
             'users.name',
             'users.email',
         ];
