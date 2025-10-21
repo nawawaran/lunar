@@ -141,19 +141,4 @@ class Staff extends Authenticatable implements FilamentUser, HasName
     {
         return $this->full_name;
     }
-
-    public function oldPins(): MorphMany
-    {
-        return $this->morphMany(PinHistory::class, 'owner');
-    }
-
-    public function pin(): MorphOne
-    {
-        return $this->morphOne(Pin::class, 'owner');
-    }
-
-    public function pinAudits(): MorphMany
-    {
-        return $this->morphMany(PinAudit::class, 'owner');
-    }
 }
